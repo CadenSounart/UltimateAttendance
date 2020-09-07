@@ -1,0 +1,58 @@
+plugins {
+    id "application"
+}
+
+java
+{
+    sourceCompatibility = JavaVersion.VERSION_12
+    targetCompatibility = JavaVersion.VERSION_12
+}
+
+sourceSets
+{
+    main 
+    {
+        java
+        {
+            srcDirs 'src/main/java'
+        }
+    }
+}
+version = '1.0.0'
+
+mainClassName = 'Main'
+
+repositories
+{
+    mavenCentral()
+    maven
+    {
+        url = 'https://licensespring-maven.s3.eu-central-1.amazonaws.com/'
+    }
+}
+
+dependencies
+{
+    implementation 'com.licensespring:licensespring-license-client:2.1.0'
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0-alpha-6'
+    // https://mvnrepository.com/artifact/net.harawata/appdirs
+    implementation group: 'net.harawata', name: 'appdirs', version: '1.2.0'
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
+    implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.6.0'
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.7'
+}
+
+jar
+{
+    manifest
+    {
+        attributes "Main-Class": "$mainClassName"
+    }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
